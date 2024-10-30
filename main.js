@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu } = require("electron");
 
 let mainWindow;
 
@@ -12,4 +12,23 @@ app.on("ready", function () {
     },
   });
   mainWindow.loadFile("index.html");
+
+  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+  Menu.setApplicationMenu(mainMenu);
 });
+
+const mainMenuTemplate = [
+  {
+    label: "القائمة",
+    submenu: [
+      { label: "اضافة مهمة" },
+      {
+        label: "خروج",
+        accelerator: process.platform == "darwin" ? "Cmd+Q" : "Ctrl+Q",
+        click() {
+          app.quit();
+        },
+      },
+    ],
+  },
+];
