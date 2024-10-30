@@ -1,0 +1,17 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Med Mahmoud Ahmedou",
+  "license": "ISC",
+  "devDependencies": {
+    "bootstrap": "^5.3.3",
+    "electron": "^33.0.2",
+    "jquery": "^3.7.1"
+  }
+}
