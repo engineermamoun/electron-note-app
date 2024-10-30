@@ -13,5 +13,8 @@
     "bootstrap": "^5.3.3",
     "electron": "^33.0.2",
     "jquery": "^3.7.1"
+  },
+  "dependencies": {
+    "jsstore": "^4.8.1"
   }
 }
