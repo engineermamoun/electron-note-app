@@ -1,4 +1,4 @@
-//normalScript.js
+
 const { ipcRenderer } = require("electron");
 
 const form = document.querySelector("form");

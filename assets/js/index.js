@@ -1,1 +1,3 @@
-require("../config/indexNormal");
+require("./config/indexNormal");
+
+require("./config/indexTimed");

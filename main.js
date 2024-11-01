@@ -1,8 +1,16 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  ipcMain,
+  dialog,
+  Notification,
+} = require("electron");
 const fs = require("fs");
 const path = require("path");
 let mainWindow;
 let addWindow;
+let addTimedWindow;
 
 app.on("ready", function () {
   mainWindow = new BrowserWindow({
@@ -31,6 +39,12 @@ const mainMenuTemplate = [
         label: "اضافة مهمة",
         click() {
           initAddWindow();
+        },
+      },
+      {
+        label: "اضافة مهمة مؤقتة",
+        click() {
+          createTimedWindow();
         },
       },
       {
@@ -78,6 +92,24 @@ function initAddWindow() {
   addWindow.removeMenu();
 }
 
+function createTimedWindow() {
+  addTimedWindow = new BrowserWindow({
+    width: 400,
+    height: 400,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      // enableRemoteModule: true,
+    },
+  });
+  addTimedWindow.loadFile("./views/timedTask.html");
+  addTimedWindow.on("closed", (e) => {
+    e.preventDefault();
+    addTimedWindow = null;
+  });
+  addTimedWindow.removeMenu();
+}
+
 ipcMain.on("add-normal-task", function (e, item) {
   mainWindow.webContents.send("add-normal-task", item);
   addWindow.close();
@@ -106,4 +138,22 @@ ipcMain.on("create-txt", function (e, note) {
 
 ipcMain.on("new-nromal", function (e) {
   initAddWindow();
+});
+
+ipcMain.on("add-timed-note", function (e, note, notificationDate) {
+  mainWindow.webContents.send("add-timed-note", note, notificationDate);
+  addTimedWindow.close();
+});
+
+ipcMain.on("notify", function (e, note) {
+  new Notification({
+    title:"لديك تنبيه جديد",
+    body:note,
+    icon:path.join(__dirname, "./assets/images/icon.png")
+  }).show()
+});
+
+
+ipcMain.on("new-timed", function (e) {
+  createTimedWindow();
 });
