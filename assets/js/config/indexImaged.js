@@ -2,7 +2,7 @@ const { ipcRenderer } = require("electron");
 const fs = require("fs");
 const connection = require("./connection");
 
-let newImaged = document.querySelector(".todo--images .add-new-imaged");
+let newImaged = document.querySelector(".todo--images .add-new-task");
 newImaged.addEventListener("click", () => {
   ipcRenderer.send("new-imaged");
 });
@@ -69,8 +69,10 @@ function showImaged() {
     })
     .then((tasks) => {
       if (tasks.length === 0) {
+        clearImagedBtn.classList.remove("clear-all--show");
         imagedList.innerHTML = "<li class='empty-list'>لا توجد مهام</li>";
       } else {
+        clearImagedBtn.classList.add("clear-all--show");
         clearImagedBtn.addEventListener("click", () => {
           return connection
             .remove({
@@ -106,17 +108,17 @@ function showImaged() {
           taskInput.value = task.note;
           taskImage.setAttribute("src", task.img_uri);
 
-          deleteBtn.innerHTML = "حذق";
+          deleteBtn.innerHTML = "حذف <i class='fas fa-trash-alt'></i>";
           deleteBtn.addEventListener("click", () => {
             deleteImagedTask(task.id, task.img_uri);
           });
 
-          updateBtn.innerHTML = "تحديث";
+          updateBtn.innerHTML = "تحديث <i class='fas fa-cloud-upload-alt'></i>";
           updateBtn.addEventListener("click", () => {
             updateImagedTask(task.id, taskInput.value);
           });
 
-          exportBtn.innerHTML = "تصدير";
+          exportBtn.innerHTML =  "تصدير <i class='fas fa-file-export'></i>";
           exportBtn.addEventListener("click", () => {
             ipcRenderer.send("create-txt", task.note);
           });

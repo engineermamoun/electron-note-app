@@ -61,8 +61,10 @@ function showTimed() {
     })
     .then((tasks) => {
       if (tasks.length === 0) {
+        clearTimedBtn.classList.remove("clear-all--show");
         timedList.innerHTML = "<li class='empty-list'>لا توجد مهمام</li>";
       } else {
+        clearTimedBtn.classList.add("clear-all--show");
         clearTimedBtn.addEventListener("click", () => {
           return connection
             .remove({
@@ -82,17 +84,17 @@ function showTimed() {
 
           timeHolder.classList.add("time-holder");
           buttonsHolder.classList.add("buttons-holder");
-          deleteBtn.innerHTML = "حذق";
+          deleteBtn.innerHTML = "حذف <i class='fas fa-trash-alt'></i>";;
           deleteBtn.addEventListener("click", () => {
             deleteTask(task.id);
           });
 
-          updateBtn.innerHTML = "تحديث";
+          updateBtn.innerHTML = "تحديث <i class='fas fa-cloud-upload-alt'></i>";
           updateBtn.addEventListener("click", () => {
             updateTask(task.id, taskInput.value);
           });
 
-          exportBtn.innerHTML = "تصدير";
+          exportBtn.innerHTML = "تصدير <i class='fas fa-file-export'></i>";
           exportBtn.addEventListener("click", () => {
             ipcRenderer.send("create-txt", task.note);
           });

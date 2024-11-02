@@ -62,8 +62,10 @@ function showNormal() {
     })
     .then((tasks) => {
       if (tasks.length === 0) {
+        clearNormalBtn.classList.remove("clear-all--show");
         normalTasksList.innerHTML = "<li class='empty-list'>لا توجد مهام</li>";
       } else {
+        clearNormalBtn.classList.add("clear-all--show");
         clearNormalBtn.addEventListener("click", () => {
           return connection
             .remove({
@@ -80,17 +82,17 @@ function showNormal() {
           let exportBtn = document.createElement("button");
 
           buttonsHolder.classList.add("buttons-holder");
-          deleteBtn.innerHTML = "احذف";
+          deleteBtn.innerHTML = "حذف <i class='fas fa-trash-alt'></i>";
           deleteBtn.addEventListener("click", () => {
             deleteTask(task.id);
           });
 
-          updateBtn.innerHTML = "تحديث";
+          updateBtn.innerHTML ="تحديث <i class='fas fa-cloud-upload-alt'></i>";
           updateBtn.addEventListener("click", () => {
             updateTask(task.id, taskInput.value);
           });
 
-          exportBtn.innerHTML = "تصدير";
+          exportBtn.innerHTML ="تصدير <i class='fas fa-file-export'></i>";
           exportBtn.addEventListener("click", () => {
             ipcRenderer.send("create-txt", task.note);
           });
