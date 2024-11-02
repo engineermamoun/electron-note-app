@@ -11,6 +11,9 @@ const path = require("path");
 let mainWindow;
 let addWindow;
 let addTimedWindow;
+let addImagedWindow;
+
+const appPath = app.getPath("userData");
 
 app.on("ready", function () {
   mainWindow = new BrowserWindow({
@@ -45,6 +48,12 @@ const mainMenuTemplate = [
         label: "اضافة مهمة مؤقتة",
         click() {
           createTimedWindow();
+        },
+      },
+      {
+        label: "اضافة مهمة مع صورة",
+        click() {
+          createImagedWindow();
         },
       },
       {
@@ -147,13 +156,50 @@ ipcMain.on("add-timed-note", function (e, note, notificationDate) {
 
 ipcMain.on("notify", function (e, note) {
   new Notification({
-    title:"لديك تنبيه جديد",
-    body:note,
-    icon:path.join(__dirname, "./assets/images/icon.png")
-  }).show()
+    title: "لديك تنبيه جديد",
+    body: note,
+    icon: path.join(__dirname, "./assets/images/icon.png"),
+  }).show();
 });
-
 
 ipcMain.on("new-timed", function (e) {
   createTimedWindow();
+});
+
+function createImagedWindow() {
+  addImagedWindow = new BrowserWindow({
+    width: 400,
+    height: 400,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      // enableRemoteModule: true,
+    },
+  });
+  addImagedWindow.loadFile("./views/imagedTask.html");
+  addImagedWindow.on("closed", (e) => {
+    e.preventDefault();
+    addImagedWindow = null;
+  });
+  addImagedWindow.removeMenu();
+}
+
+ipcMain.on("upload-image", function (event) {
+  dialog
+    .showOpenDialog({
+      properties: ["openFile"],
+      filters: [{ name: "images", extentions: ["jpg", "png", "gif"] }],
+    })
+    .then((result) => {
+      event.sender.send("open-file", result.filePaths, appPath);
+    });
+});
+
+ipcMain.on("add-imaged-task", function (event, note, imgURL) {
+  mainWindow.webContents.send("add-imaged-task", note, imgURL);
+  addImagedWindow.close();
+});
+
+ipcMain.on("new-imaged", function (event) {
+ createImagedWindow()
 });

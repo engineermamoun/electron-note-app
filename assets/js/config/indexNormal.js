@@ -21,7 +21,7 @@ function addNormalTask(task) {
       ],
     })
     .then(() => {
-      console.log("Task added successfully");
+  
       showNormal();
     })
     .catch((err) => {
