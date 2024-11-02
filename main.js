@@ -5,15 +5,19 @@ const {
   ipcMain,
   dialog,
   Notification,
+  Tray,
 } = require("electron");
 const fs = require("fs");
 const path = require("path");
+const appPath = app.getPath("userData");
+
 let mainWindow;
 let addWindow;
 let addTimedWindow;
 let addImagedWindow;
-
-const appPath = app.getPath("userData");
+let tray = null;
+process.env.NODE_ENV = "development";
+// process.env.NODE_ENV = "production";
 
 app.on("ready", function () {
   mainWindow = new BrowserWindow({
@@ -32,6 +36,17 @@ app.on("ready", function () {
 
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   Menu.setApplicationMenu(mainMenu);
+  mainWindow.on("minimize", function (event) {
+    event.preventDefault();
+    mainWindow.hide();
+    tray = createTray();
+  });
+
+  mainWindow.on("restore", function (event) {
+    // event.preventDefault();
+    mainWindow.show();
+    tray.destroy();
+  });
 });
 
 const mainMenuTemplate = [
@@ -65,7 +80,12 @@ const mainMenuTemplate = [
       },
     ],
   },
-  {
+];
+if (process.platform === "darwin") {
+  mainMenuTemplate.unshift({});
+}
+if (process.env.NODE_ENV != "production") {
+  mainMenuTemplate.push({
     label: "أدوات المطور",
     submenu: [
       {
@@ -80,6 +100,33 @@ const mainMenuTemplate = [
         role: "reload",
       },
     ],
+  });
+}
+
+function createTray() {
+  let iconPath = path.join(__dirname, "./assets/images/icon.png");
+  let appIcon = new Tray(iconPath);
+
+  const contextMenu = Menu.buildFromTemplate(iconMenuTemplate);
+  appIcon.on("double-click", function () {
+    mainWindow.show();
+  });
+  appIcon.setToolTip("تطبيق المهام");
+  appIcon.setContextMenu(contextMenu);
+  return appIcon;
+}
+const iconMenuTemplate = [
+  {
+    label: "فتح",
+    click() {
+      mainWindow.show();
+    },
+  },
+  {
+    label: "خروج",
+    click() {
+      app.quit();
+    },
   },
 ];
 
@@ -201,5 +248,5 @@ ipcMain.on("add-imaged-task", function (event, note, imgURL) {
 });
 
 ipcMain.on("new-imaged", function (event) {
- createImagedWindow()
+  createImagedWindow();
 });
