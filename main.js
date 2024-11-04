@@ -16,8 +16,8 @@ let addWindow;
 let addTimedWindow;
 let addImagedWindow;
 let tray = null;
-process.env.NODE_ENV = "development";
-// process.env.NODE_ENV = "production";
+// process.env.NODE_ENV = "development";
+process.env.NODE_ENV = "production";
 
 app.on("ready", function () {
   mainWindow = new BrowserWindow({
@@ -156,6 +156,7 @@ function createTimedWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       // enableRemoteModule: true,
+  
     },
   });
   addTimedWindow.loadFile("./views/timedTask.html");
