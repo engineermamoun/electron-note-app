@@ -1,74 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>تطبيق ادارة المهام</title>
-    <link rel="stylesheet" href="./assets/css/all.min.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
-    />
-  </head>
-  <body>
-    <div class="main-container">
-      <div class="main-container__nav">
-        <h1>تدارة تطبيق المهام</h1>
-      </div>
-      <section class="todo todo--normal">
-        <div>
-          <div>
-            <h2>قائمة المهام النصية</h2>
-            <ul class="todo--normal__list"></ul>
-            <div class="todo-bottom">
-              <button class="add-new-task">
-                اضافة مهمة <i class="fas fa-plus"></i>
-              </button>
-              <button class="clear-all">
-                حذف الجميع <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section class="todo todo--timed">
-        <div>
-          <div>
-            <h2>قائمة المهام المؤقتة</h2>
-            <ul class="todo--timed__list"></ul>
-            <div class="todo-bottom">
-              <button class="add-new-task">
-                اضافة مهمة <i class="fas fa-plus"></i>
-              </button>
-              <button class="clear-all">
-                حذف الجميع <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تطبيق ادارة المهام</title>
+  <link rel="stylesheet" href="./assets/css/all.min.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+</head>
 
-      <section class="todo todo--images">
-        <div>
-          <div>
-            <h2>قائمة المهام ذات الصور</h2>
-            <ul class="todo--images__list"></ul>
-            <div class="todo-bottom">
-              <button class="add-new-task">
-                اضافة مهمة <i class="fas fa-plus"></i>
-              </button>
-              <button class="clear-all">
-                حذف الجميع <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+<body>
+  <div class="main-container">
+    <div class="main-container__nav">
+      <h1>تدارة تطبيق المهام</h1>
     </div>
-    <script>
-      require("./assets/js/index.js");
-    </script>
-  </body>
+    <section class="todo todo--normal">
+      <div>
+        <div>
+          <h2>قائمة المهام النصية</h2>
+          <ul class="todo--normal__list"></ul>
+          <div class="todo-bottom">
+            <button class="add-new-task">
+              اضافة مهمة <i class="fas fa-plus"></i>
+            </button>
+            <button class="clear-all">
+              حذف الجميع <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="todo todo--timed">
+      <div>
+        <div>
+          <h2>قائمة المهام المؤقتة</h2>
+          <ul class="todo--timed__list"></ul>
+          <div class="todo-bottom">
+            <button class="add-new-task">
+              اضافة مهمة <i class="fas fa-plus"></i>
+            </button>
+            <button class="clear-all">
+              حذف الجميع <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="todo todo--images">
+      <div>
+        <div>
+          <h2>قائمة المهام ذات الصور</h2>
+          <ul class="todo--images__list"></ul>
+          <div class="todo-bottom">
+            <button class="add-new-task">
+              اضافة مهمة <i class="fas fa-plus"></i>
+            </button>
+            <button class="clear-all">
+              حذف الجميع <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    require("./assets/js/index.js");
+  </script>
+</body>
+
 </html>

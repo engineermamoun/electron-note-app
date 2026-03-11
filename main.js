@@ -156,7 +156,6 @@ function createTimedWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       // enableRemoteModule: true,
-  
     },
   });
   addTimedWindow.loadFile("./views/timedTask.html");

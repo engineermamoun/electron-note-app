@@ -7,7 +7,6 @@ newImaged.addEventListener("click", () => {
   ipcRenderer.send("new-imaged");
 });
 ipcRenderer.on("add-imaged-task", function (e, note, imgURL) {
-
   addImagedTask(note, imgURL);
 });
 
@@ -92,21 +91,33 @@ function showImaged() {
           });
 
           let listItem = document.createElement("li");
+          listItem.classList.add("image-task-item"); // Add class for styling
           let taskInput = document.createElement("input");
 
           let imageHolder = document.createElement("div");
+          imageHolder.classList.add("image-container-modern"); // Add class for styling
           let taskImage = document.createElement("img");
 
           let deleteBtn = document.createElement("button");
           let noteContentHolder = document.createElement("div");
+          noteContentHolder.classList.add("content-holder"); // Add class for styling
           let buttonsHolder = document.createElement("div");
-          buttonsHolder.classList.add("buttons-holder");
+          // buttonsHolder.classList.add("buttons-holder");
+          buttonsHolder.classList.add("buttons-holder", "buttons-modern"); // Add modern class
 
           let exportBtn = document.createElement("button");
 
           let updateBtn = document.createElement("button");
           taskInput.value = task.note;
+          taskInput.classList.add("task-input"); // Add class for styling
           taskImage.setAttribute("src", task.img_uri);
+          taskImage.classList.add("task-image-modern"); // Add class for styling
+
+          // Add error handling for broken images
+          taskImage.onerror = function () {
+            this.src = "./assets/images/icons.png"; // Add a placeholder image
+            this.classList.add("image-error");
+          };
 
           deleteBtn.innerHTML = "حذف <i class='fas fa-trash-alt'></i>";
           deleteBtn.addEventListener("click", () => {
@@ -118,7 +129,7 @@ function showImaged() {
             updateImagedTask(task.id, taskInput.value);
           });
 
-          exportBtn.innerHTML =  "تصدير <i class='fas fa-file-export'></i>";
+          exportBtn.innerHTML = "تصدير <i class='fas fa-file-export'></i>";
           exportBtn.addEventListener("click", () => {
             ipcRenderer.send("create-txt", task.note);
           });
